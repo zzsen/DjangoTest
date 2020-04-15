@@ -1,0 +1,21 @@
+db:
+  image: mysql
+  expose:
+    - "3306"
+  volumes:
+    - ./db:/var/lib/mysql
+  environment:
+    - MYSQL_DATABASE=django
+    - MYSQL_USER=test
+    - MYSQL_PASS=zzsen
+    - MYSQL_ROOT_PASSWORD=zzsen  
+
+web:
+  build: .
+  command: python ./mysite/manage.py runserver 0.0.0.0:8000
+  volumes:
+    - .:/code
+  ports:
+    - "8000:8000"
+  links:
+    - db
