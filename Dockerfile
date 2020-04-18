@@ -7,7 +7,7 @@ COPY . /usr/src/app
 # 将/usr/src/app指定为工作目录
 WORKDIR /usr/src/app
 # 在image中安装运行django项目所需要的依赖
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt -i http://mirrors.aliyun.com/pypi/simple/
 # 开放容器的8080端口，允许外部链接这个端口
 EXPOSE 8080
 # 执行django启动命令
