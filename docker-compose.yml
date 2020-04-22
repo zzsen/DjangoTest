@@ -1,21 +1,37 @@
-db:
-  image: mysql
-  expose:
-    - "3306"
-  volumes:
-    - ./db:/var/lib/mysql
-  environment:
-    - MYSQL_DATABASE=django
-    - MYSQL_USER=test
-    - MYSQL_PASS=zzsen
-    - MYSQL_ROOT_PASSWORD=zzsen  
+version: '3'
+services:
+  db:
+    image: mysql
+    expose:
+      - "3306"
+    volumes:
+      - ./mysql:/var/lib/mysql:rw
+    environment:
+      - MYSQL_DATABASE=django
+      - MYSQL_USER=sen
+      - MYSQL_PASS=zzsen
+      - MYSQL_ROOT_PASSWORD=123456  
+    ports:
+      - "3306:3306"
 
-web:
-  build: .
-  command: python ./mysite/manage.py runserver 0.0.0.0:8000
-  volumes:
-    - .:/code
-  ports:
-    - "8000:8000"
-  links:
-    - db
+  redis:
+    image: redis:3.2.1
+    ports:
+      - "6379:6379"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+      - /tmp/logs:/tmp
+    command: bash start.sh
+    ports:
+      - "8012:8080"
+    links:
+      - redis:redisdb
+    depends_on:
+      - redis
+      - db
+    restart: always
