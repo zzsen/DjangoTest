@@ -25,7 +25,7 @@ colLength = len(value["MapData"][0])
 
 
 def getAndExtend(origin, x, y):
-  if x>0 and x<rowLength and y>0 and y<colLength:
+  if x>=0 and x<rowLength and y>=0 and y<colLength:
     area = getRoundCoordinate(x, y)
     if len(area)>0:
       origin.extend(area)
@@ -46,22 +46,6 @@ def getRoundCoordinate(x,y):
     coordinateList = getAndExtend(coordinateList, x+1, y)
     coordinateList = getAndExtend(coordinateList, x, y-1)
     coordinateList = getAndExtend(coordinateList, x, y+1)
-    if x-1 > 0:
-      up = getRoundCoordinate(x-1, y)
-      if len(up)>0:
-        coordinateList.extend(up)
-    if x+1 < rowLength:
-      down = getRoundCoordinate(x+1, y)
-      if len(down)>0:
-        coordinateList.extend(down)
-    if y-1 > 0:
-      left = getRoundCoordinate(x, y-1)
-      if len(left)>0:
-        coordinateList.extend(left)
-    if y+1 < colLength:
-      right = getRoundCoordinate(x, y+1)
-      if len(right)>0:
-        coordinateList.extend(right)
   return coordinateList
 
 def main():
