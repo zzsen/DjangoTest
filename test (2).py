@@ -46,6 +46,22 @@ def getRoundCoordinate(x,y):
     coordinateList = getAndExtend(coordinateList, x+1, y)
     coordinateList = getAndExtend(coordinateList, x, y-1)
     coordinateList = getAndExtend(coordinateList, x, y+1)
+    if x-1 > 0:
+      up = getRoundCoordinate(x-1, y)
+      if len(up)>0:
+        coordinateList.extend(up)
+    if x+1 < rowLength:
+      down = getRoundCoordinate(x+1, y)
+      if len(down)>0:
+        coordinateList.extend(down)
+    if y-1 > 0:
+      left = getRoundCoordinate(x, y-1)
+      if len(left)>0:
+        coordinateList.extend(left)
+    if y+1 < colLength:
+      right = getRoundCoordinate(x, y+1)
+      if len(right)>0:
+        coordinateList.extend(right)
   return coordinateList
 
 def main():
